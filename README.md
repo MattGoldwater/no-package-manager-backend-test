@@ -31,5 +31,6 @@ The other option that stood out was to install it within my express folder's nod
 
 I also considered installing packages globally to save disk space by only installing each package version once. I couldn't think of a simple way to do this without creating a single node_modules structure for all of my projects. That would mean I'd alter multiple projects at once when changing my node_modules structure. In retrospect, you could use a package management system with global installations. That's what [pnpm](https://pnpm.js.org/en/) has done.
 
-At this point, I didn't want to take the time to install body-parser, any other dependencies needed to serve the index.html file and figure out my directory structure. I'm convinced that it takes too much time to manage packages yourself! Plus there are [many other benefits of package managers](https://softwareengineering.stackexchange.com/questions/372444/why-prefer-a-package-manager-over-a-library-folder).
+At this point, I didn't want to take the time to install body-parser, any other dependencies needed to serve the index.html file and figure out my directory structure. I'm convinced that it takes too much time to manage packages yourself on the back-end! Plus there are [many other benefits of package managers](https://softwareengineering.stackexchange.com/questions/372444/why-prefer-a-package-manager-over-a-library-folder).
 
+I also tried [creating a react project without using a package manager for front-end packages](https://github.com/MattGoldwater/no-package-manager-frontend-test). Feel free to check it out!
