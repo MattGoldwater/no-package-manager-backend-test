@@ -8,24 +8,16 @@ Additionally, I realized package managers could theoretically help establish nam
 
 Also, without a package manager there's no way to connect to the [npm package registry](https://docs.npmjs.com/misc/registry). As a result, I installed express by cloning its [git repository](https://github.com/expressjs/express) into my node_modules folder. Cloning the express GitHub repo took 1 minute 8.75 seconds. Plus, express's dependencies aren't installed yet. To test an npm installation, I created an identical repo and installed express with npm. It only took 18.305 seconds.
 
-It takes longer to download the express GitHub repo because its a much bigger folder (10.6mb) than its npm package (1.8mb including Express's dependencies) . The express repo's git history alone is almost 10mb. (I removed git tracking from the express folder before committing this repo to github, but you can confirm this by downloading express from github and inspecting its .git folder. To do that on a Mac right click on the folder and select "Get Info") The express git repo also includes other files used for development such as files related to linting, test, benchmarks, continuous integration, examples and various markdown files.
+It takes longer to download the express GitHub repo because its a much bigger folder (10.6mb) than its npm package (1.8mb including Express's dependencies) . The express repo's git history alone is almost 10mb. 
 
-Express GitHub Repo Storage Info: 
-
-![Express GitHub directory picture](https://res.cloudinary.com/dyr8j9g6m/image/upload/v1572286292/Screen_Shot_2019-09-25_at_9.31.09_AM_b8fflk.png "Express GitHub directory picture") 
-
-.git Folder in Express GitHub Repo: 
-
-![picture of .git folder in Express GitHub Repo ](https://res.cloudinary.com/dyr8j9g6m/image/upload/v1572286208/Screen_Shot_2019-09-27_at_9.28.52_AM_x17fmk.png "picture of .git folder in Express GitHub Repo")
-
-Afterwards, I realized that I could download a package by using the [npm package registry api](https://github.com/npm/registry/blob/master/docs/REGISTRY-API.md). I was able to install the express tar file and unzip its contents in less than a second with the following command. 
+Later on, I realized that I could download a package by using the [npm package registry api](https://github.com/npm/registry/blob/master/docs/REGISTRY-API.md). I was able to install the express tar file and unzip its contents in less than a second with the following command. 
 ```
 curl https://registry.npmjs.org/express/-/express-4.17.1.tgz | tar -xz && mv package express
 ``` 
 
-While this command is fast it doesn't install a packages sub-dependencies. I could continue to try to figure that out, but at that point I'd basically be making my own package manager. 
+While this command is fast, it doesn't install a packages sub-dependencies. I could continue to try to figure out a way to automate this process, but at that point I'd basically be making my own package manager. So I'll move on for now.
 
-Then I added the following code to index.js in the server directory:
+Next, I added the following code to index.js in the server directory:
 
 ```javascript
 const express = require('express');
@@ -38,6 +30,8 @@ The other option that stood out was to install it within my express folder's nod
 
 I also considered installing packages globally to save disk space by only installing each package version once. I couldn't think of a simple way to do this without creating a single node_modules structure for all of my projects. That would mean I'd alter multiple projects at once when changing my node_modules structure.
 
-At this point, I didn't want to take the time to install body-parser, any other dependencies needed to serve the index.html file and figure out my directory structure. I'm convinced that it takes too much time to manage packages yourself on the back-end! Plus there are [many other benefits of package managers](https://softwareengineering.stackexchange.com/questions/372444/why-prefer-a-package-manager-over-a-library-folder).
+Later on, as I learned about [pnpm](https://pnpm.js.org/) and [yarn pnp](https://yarnpkg.com/lang/en/docs/pnp/) it turns out modern package managers have figured out better methods to make a dependency graph that allows you to reduce installation times and save hard drive space. They're covered in [my blog post](https://medium.com/@MattGoldwater/the-evolution-of-javascript-package-managers-f9797be7cf0e).
+
+At this point, I didn't want to take the time to install body-parser, any other dependencies needed to serve the index.html file or figure out my dependency tree. I'm convinced that its worthwhile to use a package manager on the back-end! Plus, [package managers have many other benefits](https://softwareengineering.stackexchange.com/questions/372444/why-prefer-a-package-manager-over-a-library-folder).
 
 I also tried [creating a react project without using a package manager for front-end packages](https://github.com/MattGoldwater/no-package-manager-frontend-test). Feel free to check it out!
