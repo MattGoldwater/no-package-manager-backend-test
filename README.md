@@ -18,18 +18,25 @@ Express GitHub Repo Storage Info:
 
 ![picture of .git folder in Express GitHub Repo ](https://res.cloudinary.com/dyr8j9g6m/image/upload/v1572286208/Screen_Shot_2019-09-27_at_9.28.52_AM_x17fmk.png "picture of .git folder in Express GitHub Repo")
 
+Afterwards, I realized that I could download a package by using the [npm package registry api](https://github.com/npm/registry/blob/master/docs/REGISTRY-API.md). I was able to install the express tar file and unzip its contents in less than a second with the following command. 
+```
+curl https://registry.npmjs.org/express/-/express-4.17.1.tgz | tar -xz && mv package express
+``` 
+
+While this command is fast it doesn't install a packages sub-dependencies. I could continue to try to figure that out, but at that point I'd basically be making my own package manager. 
+
 Then I added the following code to index.js in the server directory:
 
-```
+```javascript
 const express = require('express');
 const app = express();
 ```
 
-I ran this file and it threw an error because express's dependency [body-parser](https://www.npmjs.com/package/body-parser) wasn't installed.  Now I had to decide where to install body-parser. My first thought was to install it in the root node_modules folder as npm would because [it tries to keep the dependency tree as flat as possible](https://npm.github.io/how-npm-works-docs/npm3/how-npm3-works.html).
+I ran the index.js file in my server folder and it threw an error because express's dependency [body-parser](https://www.npmjs.com/package/body-parser) wasn't installed.  Now I had to decide where to install body-parser. My first thought was to install it in the root node_modules folder as npm would because [it tries to keep the dependency tree as flat as possible](https://npm.github.io/how-npm-works-docs/npm3/how-npm3-works.html).
 
 The other option that stood out was to install it within my express folder's node_modules sub-folder. [Npm would've done it this way in version 1 and 2](https://npm.github.io/how-npm-works-docs/npm2/how-npm2-works.html).
 
-I also considered installing packages globally to save disk space by only installing each package version once. I couldn't think of a simple way to do this without creating a single node_modules structure for all of my projects. That would mean I'd alter multiple projects at once when changing my node_modules structure. In retrospect, you could use a package management system with global installations. That's what [pnpm](https://pnpm.js.org/en/) has done.
+I also considered installing packages globally to save disk space by only installing each package version once. I couldn't think of a simple way to do this without creating a single node_modules structure for all of my projects. That would mean I'd alter multiple projects at once when changing my node_modules structure.
 
 At this point, I didn't want to take the time to install body-parser, any other dependencies needed to serve the index.html file and figure out my directory structure. I'm convinced that it takes too much time to manage packages yourself on the back-end! Plus there are [many other benefits of package managers](https://softwareengineering.stackexchange.com/questions/372444/why-prefer-a-package-manager-over-a-library-folder).
 
