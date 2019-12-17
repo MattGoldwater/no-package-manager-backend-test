@@ -15,7 +15,7 @@ Later on, I realized that I could download a package by using the [npm package r
 curl https://registry.npmjs.org/express/-/express-4.17.1.tgz | tar -xz && mv package express
 ``` 
 
-While this command is fast, it doesn't install a packages sub-dependencies. I could continue to try to figure out a way to automate this process, but at that point I'd basically be making my own package manager. So I'll move on for now.
+While this command is fast, it doesn't install a packages sub-dependencies. I could continue to try to figure out a way to automate this process, but at that point I'd basically be making my own package manager. So I'll move on.
 
 Next, I added the following code to index.js in the server directory:
 
